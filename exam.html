@@ -1,0 +1,139 @@
+<!doctype html>
+<html lang="az">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Examination System</title>
+    <link rel="stylesheet" href="style.css" />
+    <style>
+      #timer {
+        position: fixed;
+        top: 10px;
+        right: 10px;
+        font-weight: bold;
+        background-color: #f0f0f0;
+        padding: 5px 10px;
+        border-radius: 5px;
+      }
+      button {
+        margin: 5px;
+        padding: 8px 12px;
+      }
+      .container {
+        max-width: 700px;
+        margin: 100px auto 0 auto;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div id="timer">Vaxt: 00:00</div>
+    <div class="container">
+      <h2 id="sual"></h2>
+      <div id="cavablar"></div>
+    </div>
+
+    <script src="questions.js"></script>
+
+    <script>
+      let sualIndex = 0;
+      let duzCavab = 0;
+      let sehvCavab = 0;
+
+      const sualYeri = document.getElementById("sual");
+      const cavabYeri = document.getElementById("cavablar");
+      const timerYeri = document.getElementById("timer");
+
+      const startTime = new Date(); // imtahan başlama vaxtı
+
+      function qarishdir(array) {
+        for (let i = array.length - 1; i > 0; i--) {
+          let j = Math.floor(Math.random() * (i + 1));
+          [array[i], array[j]] = [array[j], array[i]];
+        }
+      }
+
+      qarishdir(questions);
+
+      let secilmisSuallar = questions.slice(0, 15);
+
+      function updateTimer() {
+        const now = new Date();
+        const diff = Math.floor((now - startTime) / 1000); // saniyə
+        const min = String(Math.floor(diff / 60)).padStart(2, '0');
+        const sec = String(diff % 60).padStart(2, '0');
+        timerYeri.innerText = `Vaxt: ${min}:${sec}`;
+      }
+
+      function sualiGoster() {
+        updateTimer();
+        cavabYeri.innerHTML = "";
+
+        let sual = secilmisSuallar[sualIndex];
+        sualYeri.innerText = sualIndex + 1 + ". " + sual.question;
+
+        let variantlar = [sual.correct, ...sual.wrong];
+        qarishdir(variantlar);
+
+        variantlar.forEach(function (secim) {
+          let btn = document.createElement("button");
+          btn.innerText = secim;
+
+          btn.onclick = function () {
+            if (secim === sual.correct) {
+              duzCavab++;
+              btn.style.backgroundColor = "green";
+            } else {
+              sehvCavab++;
+              btn.style.backgroundColor = "red";
+            }
+
+            Array.from(cavabYeri.children).forEach(function (d) {
+              d.disabled = true;
+            });
+
+            setTimeout(function () {
+              sualIndex++;
+
+              if (sualIndex < secilmisSuallar.length) {
+                sualiGoster();
+              } else {
+                neticeniGoster();
+              }
+            }, 1000);
+          };
+
+          cavabYeri.appendChild(btn);
+        });
+      }
+
+      function neticeniGoster() {
+        const endTime = new Date();
+        const totalSeconds = Math.floor((endTime - startTime) / 1000);
+        const min = String(Math.floor(totalSeconds / 60)).padStart(2, '0');
+        const sec = String(totalSeconds % 60).padStart(2, '0');
+
+        sualYeri.innerText = "İmtahan bitdi!";
+        sualYeri.style.textAlign = "center";
+
+        cavabYeri.innerHTML = "";
+
+        let netice = document.createElement("div");
+
+        netice.innerHTML = `
+          <h3>Ümumi sual sayı: ${secilmisSuallar.length}</h3>
+          <h3>Düzgün cavab: ${duzCavab}</h3>
+          <h3>Səhv cavab: ${sehvCavab}</h3>
+          <h3>İmtahan müddəti: ${min}:${sec}</h3>
+          <p>4 səhv bir düzü aparır</p>
+        `;
+
+        cavabYeri.appendChild(netice);
+      }
+
+      setInterval(updateTimer, 1000);
+
+      sualiGoster();
+    </script>
+  </body>
+</html>

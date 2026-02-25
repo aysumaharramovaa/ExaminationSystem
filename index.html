@@ -1,136 +1,126 @@
 <!doctype html>
 <html lang="az">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Examination System</title>
-    <link rel="stylesheet" href="style.css" />
-    <style>
-      #timer {
-        position: fixed;
-        top: 10px;
-        right: 10px;
-        font-weight: bold;
-        background-color: #f0f0f0;
-        padding: 5px 10px;
-        border-radius: 5px;
-      }
-      button {
-        margin: 5px;
-        padding: 8px 12px;
-      }
-    </style>
-  </head>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Examination System</title>
+  
+  <style>
+    :root {
+      --primary: #6366f1;       
+      --primary-dark: #4f46e5;  
+      --bg: #f8fafc;
+      --text: #1e293b;
+      --shadow: 0 10px 30px rgba(99, 102, 241, 0.15);
+    }
 
-  <body>
-    <div id="timer">Vaxt: 00:00</div>
-    <div class="container">
-      <h2 id="sual"></h2>
-      <div id="cavablar"></div>
-    </div>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
 
-    <script src="questions.js"></script>
+    body {
+      min-height: 100vh;
+      background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+      font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      color: var(--text);
+      padding: 20px;
+    }
 
-    <script>
-      let sualIndex = 0;
-      let duzCavab = 0;
-      let sehvCavab = 0;
+    h1 {
+      font-size: 3.2rem;
+      font-weight: 700;
+      margin-bottom: 1rem;
+      background: linear-gradient(90deg, #6366f1, #8b5cf6);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      letter-spacing: -1px;
+    }
 
-      const sualYeri = document.getElementById("sual");
-      const cavabYeri = document.getElementById("cavablar");
-      const timerYeri = document.getElementById("timer");
+    p {
+      font-size: 1.25rem;
+      color: #475569;
+      margin-bottom: 2.5rem;
+      text-align: center;
+      max-width: 500px;
+      line-height: 1.6;
+    }
 
-      const startTime = new Date(); // imtahan başlama vaxtı
+    .btn {
+      position: relative;
+      padding: 1rem 2.8rem;
+      font-size: 1.3rem;
+      font-weight: 600;
+      color: white;
+      background: var(--primary);
+      border: none;
+      border-radius: 999px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      box-shadow: var(--shadow);
+      overflow: hidden;
+      z-index: 1;
+    }
 
-      function qarishdir(array) {
-        for (let i = array.length - 1; i > 0; i--) {
-          let j = Math.floor(Math.random() * (i + 1));
-          [array[i], array[j]] = [array[j], array[i]];
-        }
-      }
+    .btn:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 20px 40px rgba(99, 102, 241, 0.3);
+      background: var(--primary-dark);
+    }
 
-      qarishdir(questions);
+    .btn:active {
+      transform: translateY(-1px);
+    }
 
-      let secilmisSuallar = questions.slice(0, 15);
+    /* ripple effekti üçün */
+    .btn::before {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 0;
+      height: 0;
+      background: rgba(255, 255, 255, 0.3);
+      border-radius: 50%;
+      transform: translate(-50%, -50%);
+      transition: width 0.6s ease, height 0.6s ease;
+      pointer-events: none;
+      z-index: -1;
+    }
 
-      function updateTimer() {
-        const now = new Date();
-        const diff = Math.floor((now - startTime) / 1000); // saniyə cinsindən
-        const min = String(Math.floor(diff / 60)).padStart(2, '0');
-        const sec = String(diff % 60).padStart(2, '0');
-        timerYeri.innerText = `Vaxt: ${min}:${sec}`;
-      }
+    .btn:active::before {
+      width: 300px;
+      height: 300px;
+      opacity: 0;
+      transition: 0s;
+    }
 
-      function sualiGoster() {
-        updateTimer(); // sual göstərilən kimi vaxtı yenilə
-        cavabYeri.innerHTML = "";
+    @media (max-width: 500px) {
+      h1 { font-size: 2.6rem; }
+      p  { font-size: 1.1rem; }
+      .btn { padding: 0.9rem 2.4rem; font-size: 1.15rem; }
+    }
+  </style>
+</head>
+<body>
 
-        let sual = secilmisSuallar[sualIndex];
-        sualYeri.innerText = sualIndex + 1 + ". " + sual.question;
+  <h1>Xoş gəldiniz!</h1>
+  <p>İmtahana başlamaq üçün aşağıdakı düyməyə basın.</p>
+  
+  <button class="btn" id="startBtn">İmtahana Başla</button>
 
-        let variantlar = [sual.correct, ...sual.wrong];
-        qarishdir(variantlar);
+  <script>
+    const startBtn = document.getElementById('startBtn');
+    startBtn.onclick = function() {
+      window.location.href = "exam.html";
+    };
+  </script>
 
-        variantlar.forEach(function (secim) {
-          let btn = document.createElement("button");
-          btn.innerText = secim;
-
-          btn.onclick = function () {
-            if (secim === sual.correct) {
-              duzCavab++;
-              btn.style.backgroundColor = "green";
-            } else {
-              sehvCavab++;
-              btn.style.backgroundColor = "red";
-            }
-
-            Array.from(cavabYeri.children).forEach(function (d) {
-              d.disabled = true;
-            });
-
-            setTimeout(function () {
-              sualIndex++;
-
-              if (sualIndex < secilmisSuallar.length) {
-                sualiGoster();
-              } else {
-                neticeniGoster();
-              }
-            }, 1000);
-          };
-
-          cavabYeri.appendChild(btn);
-        });
-      }
-
-      function neticeniGoster() {
-        const endTime = new Date();
-        const totalSeconds = Math.floor((endTime - startTime) / 1000);
-        const min = String(Math.floor(totalSeconds / 60)).padStart(2, '0');
-        const sec = String(totalSeconds % 60).padStart(2, '0');
-
-        sualYeri.innerText = "İmtahan bitdi!";
-        sualYeri.style.textAlign = "center";
-
-        cavabYeri.innerHTML = "";
-
-        let netice = document.createElement("div");
-
-        netice.innerHTML = `
-          <h3>Ümumi sual sayı: ${secilmisSuallar.length}</h3>
-          <h3>Düzgün cavab: ${duzCavab}</h3>
-          <h3>Səhv cavab: ${sehvCavab}</h3>
-          <h3>İmtahan müddəti: ${min}:${sec}</h3>
-          <p>4 səhv bir düzü aparır</p>
-        `;
-
-        cavabYeri.appendChild(netice);
-      }
-
-      // 1 saniyədə bir dəfə timeri yenilə
-      setInterval(updateTimer, 1000);
-
-      sualiGoster();
-    </script>
-  </body>
+</body>
 </html>
