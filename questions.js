@@ -1,79 +1,154 @@
 const questions = [
-
 {
-question:"HTML nədir?",
-correct:"Markup language",
-wrong:["Programming language","Database","Operating System","Compiler"]
-},
-{
-question:"CSS nə üçündür?",
-correct:"Design üçün",
-wrong:["Database üçün","Server üçün","AI üçün","Game engine"]
-},
-{
-question:"JS nə üçündür?",
-correct:"Səhifəni interaktiv etmək",
-wrong:["Yalnız dizayn","Yalnız database","OS qurmaq","Kompilyasiya"]
-},
-{
-question:"2 + 2 = ?",
-correct:"4",
-wrong:["5","3","6","8"]
-},
-{
-question:"Azərbaycanın paytaxtı?",
-correct:"Bakı",
-wrong:["Gəncə","Sumqayıt","Şəki","Lənkəran"]
-},
-{
-question:"React nədir?",
-correct:"JS library",
-wrong:["Database","Server","Browser","OS"]
-},
-{
-question:"Python nədir?",
+question:"Java nədir?",
 correct:"Programming language",
-wrong:["Car brand","Phone","Game","Browser"]
+wrong:["Database","Browser","OS","Framework"]
 },
 {
-question:"1 byte neçə bitdir?",
-correct:"8",
-wrong:["4","16","2","32"]
+question:"HTTP nədir?",
+correct:"Protokol",
+wrong:["Database","Server","Design tool","Compiler"]
 },
 {
-question:"Internet nədir?",
-correct:"Şəbəkə sistemi",
-wrong:["Telefon","Printer","Monitor","Keyboard"]
+question:"HTTPS nə deməkdir?",
+correct:"Secure HTTP",
+wrong:["Simple HTTP","Server HTTP","System HTTP","None"]
 },
 {
-question:"CPU nədir?",
-correct:"Processor",
-wrong:["RAM","Hard disk","Mouse","Speaker"]
+question:"Frontend nədir?",
+correct:"İstifadəçi interfeysi hissəsi",
+wrong:["Server hissəsi","Database","Hostinq","Firewall"]
 },
 {
-question:"RAM nə üçündür?",
-correct:"Müvəqqəti yaddaş",
-wrong:["Əbədi yaddaş","Printer","CPU","Monitor"]
+question:"Backend nədir?",
+correct:"Server tərəfi",
+wrong:["CSS hissəsi","HTML hissəsi","Monitor","Mouse"]
 },
 {
-question:"JS harada işləyir?",
-correct:"Browserdə",
-wrong:["Yalnız printerdə","Yalnız BIOS-da","Mouse-da","USB-də"]
+question:"SQL nədir?",
+correct:"Sorğu dili",
+wrong:["Design dili","Game engine","Framework","Browser"]
 },
 {
-question:"CSS açılımı?",
-correct:"Cascading Style Sheets",
-wrong:["Computer Style System","Creative Sheet System","Color Style Syntax","Coding Style Script"]
+question:"IP nədir?",
+correct:"Şəbəkə ünvanı",
+wrong:["Database","HTML tag","Server adı","Kod redaktoru"]
 },
 {
-question:"HTML açılımı?",
-correct:"Hyper Text Markup Language",
-wrong:["High Text Machine Language","Home Tool Markup Language","Hyper Tool Multi Language","None"]
+question:"WWW nədir?",
+correct:"World Wide Web",
+wrong:["Wide Web World","Web World Wide","None","Server name"]
 },
 {
-question:"Which one is database?",
-correct:"MySQL",
-wrong:["HTML","CSS","Chrome","Photoshop"]
+question:"Ctrl + C nə edir?",
+correct:"Kopyalayır",
+wrong:["Silir","Yapışdırır","Yadda saxlayır","Bağlayır"]
+},
+{
+question:"Ctrl + V nə edir?",
+correct:"Yapışdırır",
+wrong:["Silir","Kopyalayır","Bağlayır","Seçir"]
+},
+{
+question:"Array nədir?",
+correct:"Massiv",
+wrong:["Funksiya","Database","Server","Design"]
+},
+{
+question:"Function nədir?",
+correct:"Funksiya",
+wrong:["Massiv","Database","CSS","HTML"]
+},
+{
+question:"Loop nədir?",
+correct:"Dövr",
+wrong:["Şərt","Database","Server","Printer"]
+},
+{
+question:"if statement nədir?",
+correct:"Şərt operatoru",
+wrong:["Dövr","Massiv","Server","Tag"]
+},
+{
+question:"DOM nədir?",
+correct:"Document Object Model",
+wrong:["Data Object Model","Design Object Model","None","Server model"]
+},
+{
+question:"Git nədir?",
+correct:"Versiya nəzarət sistemi",
+wrong:["Database","Game","Browser","OS"]
+},
+{
+question:"GitHub nədir?",
+correct:"Kod paylaşım platforması",
+wrong:["Database","Editor","Server","Design tool"]
+},
+{
+question:"JSON nədir?",
+correct:"Məlumat formatı",
+wrong:["Proqram dili","Database","Server","Framework"]
+},
+{
+question:"API nədir?",
+correct:"Application Programming Interface",
+wrong:["Advanced Program Internet","App Print Interface","None","Server code"]
+},
+{
+question:"Bug nədir?",
+correct:"Xəta",
+wrong:["Funksiya","Design","Server","HTML tag"]
+},
+{
+question:"Algorithm nədir?",
+correct:"Addım-addım həll yolu",
+wrong:["Database","Server","Design","Printer"]
+},
+{
+question:"Binary sistem neçəlikdir?",
+correct:"2",
+wrong:["8","10","16","4"]
+},
+{
+question:"Decimal sistem neçəlikdir?",
+correct:"10",
+wrong:["2","8","16","32"]
+},
+{
+question:"Hexadecimal sistem neçəlikdir?",
+correct:"16",
+wrong:["2","8","10","32"]
+},
+{
+question:"Cloud nədir?",
+correct:"Onlayn server sistemi",
+wrong:["Printer","Mouse","Monitor","HTML tag"]
+},
+{
+question:"Hosting nədir?",
+correct:"Sayt yerləşdirmə xidməti",
+wrong:["Design tool","Database","CSS","Browser"]
+},
+{
+question:"Firewall nədir?",
+correct:"Təhlükəsizlik sistemi",
+wrong:["Database","Design","Printer","Mouse"]
+},
+{
+question:"SSD nədir?",
+correct:"Yaddaş qurğusu",
+wrong:["CPU","Monitor","Keyboard","Printer"]
+},
+{
+question:"GPU nədir?",
+correct:"Qrafik prosessor",
+wrong:["RAM","SSD","Mouse","Speaker"]
+},
+{
+question:"Framework nədir?",
+correct:"Hazır inkişaf mühiti",
+wrong:["Database","Printer","Monitor","Tag"]
 }
+
 
 ];

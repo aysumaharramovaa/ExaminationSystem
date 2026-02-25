@@ -3,13 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Imtahan Sistemi</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
-      rel="stylesheet"
-    />
+    <title>Examination System</title>
     <link rel="stylesheet" href="style.css" />
   </head>
 
@@ -30,19 +24,29 @@
       const cavabYeri = document.getElementById("cavablar");
 
       function qarishdir(array) {
-        for (let i = array.length - 1; i > 0; i--) {
-          let j = Math.floor(Math.random() * (i + 1));
-          [array[i], array[j]] = [array[j], array[i]];
+        // for (let i = array.length - 1; i > 0; i--) {
+        //   let randomIndex = Math.floor(Math.random() * (i + 1));
+        //   let temp = array[i];
+        //   array[i] = array[randomIndex];
+        //   array[randomIndex] = temp;
+        // }
+
+        function qarishdir(array) {
+          for (let i = array.length - 1; i > 0; i--) {
+            let j = Math.floor(Math.random() * (i + 1));
+            [array[i], array[j]] = [array[j], array[i]];
+          }
         }
       }
 
       qarishdir(questions);
 
+      let secilmisSuallar = questions.slice(0, 15);
+
       function sualiGoster() {
         cavabYeri.innerHTML = "";
 
-        let sual = questions[sualIndex];
-
+        let sual = secilmisSuallar[sualIndex];
         sualYeri.innerText = sualIndex + 1 + ". " + sual.question;
 
         let variantlar = [sual.correct, ...sual.wrong];
@@ -68,7 +72,7 @@
             setTimeout(function () {
               sualIndex++;
 
-              if (sualIndex < questions.length) {
+              if (sualIndex < secilmisSuallar.length) {
                 sualiGoster();
               } else {
                 neticeniGoster();
@@ -89,11 +93,11 @@
         let netice = document.createElement("div");
 
         netice.innerHTML = `
-        <h3>Ümumi sual sayı: ${questions.length}</h3>
+        <h3>Ümumi sual sayı: ${secilmisSuallar.length}</h3>
         <h3>Düzgün cavab: ${duzCavab}</h3>
         <h3>Səhv cavab: ${sehvCavab}</h3>
-        <p>4 səhv bir düzü aparır (nolsun bura DİM deyil Kamran müəllim belə istəyir)</p>
-    `;
+        <p>4 səhv bir düzü aparır</p>
+      `;
 
         cavabYeri.appendChild(netice);
       }
