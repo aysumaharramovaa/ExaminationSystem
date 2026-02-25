@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="az">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Examination System</title>
+<link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+<div class="container">
+    <h2 id="question">Question here</h2>
+    <div id="answers"></div>
+    <button id="nextBtn">Next Question</button>
+</div>
+
+<script src="questions.js"></script>
+<script>
+
+
+let currentQuestion = 0;
+let score = 0;
+
+const questionElement = document.getElementById("question");
+const answersElement = document.getElementById("answers");
+const nextBtn = document.getElementById("nextBtn");
+
+// shuffle function
+function shuffle(array){
+    return array.sort(()=>Math.random()-0.5);
+}
+
+// suallari random et
+shuffle(questions);
+
+function loadQuestion(){
+
+    nextBtn.style.display="none";
+    answersElement.innerHTML="";
+
+    let q = questions[currentQuestion];
+
+    questionElement.innerText = (currentQuestion+1)+". "+q.question;
+
+    let options = [q.correct, ...q.wrong];
+    shuffle(options);
+
+    options.forEach(option=>{
+        const btn = document.createElement("button");
+        btn.innerText = option;
+        btn.onclick = ()=>{
+            if(option === q.correct){
+                score++;
+            }
+            nextBtn.style.display="block";
+            Array.from(answersElement.children).forEach(b=>b.disabled=true);
+        };
+        answersElement.appendChild(btn);
+    });
+
+}
+
+nextBtn.onclick = ()=>{
+    currentQuestion++;
+    if(currentQuestion < questions.length){
+        loadQuestion();
+    }else{
+        showResult();
+    }
+};
+
+function showResult(){
+    questionElement.innerHTML="Exam Finished!";
+    answersElement.innerHTML="";
+    nextBtn.style.display="none";
+
+    const result = document.createElement("div");
+    result.classList.add("result");
+    result.innerHTML="Sənin balın: "+score+" / "+questions.length;
+    answersElement.appendChild(result);
+}
+
+loadQuestion();
+
+</script>
+
+</body>
+</html>
