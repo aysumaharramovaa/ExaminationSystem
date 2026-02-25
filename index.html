@@ -3,85 +3,101 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Examination System</title>
+<title>Imtahan Sistemi</title>
 <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
 
 <div class="container">
-    <h2 id="question">Question here</h2>
-    <div id="answers"></div>
-    <button id="nextBtn">Next Question</button>
+    <h2 id="sual">Sual burada</h2>
+    <div id="cavablar"></div>
 </div>
 
 <script src="questions.js"></script>
+
 <script>
 
+let sualIndex = 0;
+let duzCavab = 0;
+let sehvCavab = 0;
 
-let currentQuestion = 0;
-let score = 0;
+const sualYeri = document.getElementById("sual");
+const cavabYeri = document.getElementById("cavablar");
 
-const questionElement = document.getElementById("question");
-const answersElement = document.getElementById("answers");
-const nextBtn = document.getElementById("nextBtn");
-
-// shuffle function
-function shuffle(array){
-    return array.sort(()=>Math.random()-0.5);
-}
-
-// suallari random et
-shuffle(questions);
-
-function loadQuestion(){
-
-    nextBtn.style.display="none";
-    answersElement.innerHTML="";
-
-    let q = questions[currentQuestion];
-
-    questionElement.innerText = (currentQuestion+1)+". "+q.question;
-
-    let options = [q.correct, ...q.wrong];
-    shuffle(options);
-
-    options.forEach(option=>{
-        const btn = document.createElement("button");
-        btn.innerText = option;
-        btn.onclick = ()=>{
-            if(option === q.correct){
-                score++;
-            }
-            nextBtn.style.display="block";
-            Array.from(answersElement.children).forEach(b=>b.disabled=true);
-        };
-        answersElement.appendChild(btn);
-    });
-
-}
-
-nextBtn.onclick = ()=>{
-    currentQuestion++;
-    if(currentQuestion < questions.length){
-        loadQuestion();
-    }else{
-        showResult();
+function qarishdir(array){
+    for(let i = array.length - 1; i > 0; i--){
+        let j = Math.floor(Math.random() * (i + 1));
+        [array[i], array[j]] = [array[j], array[i]];
     }
-};
-
-function showResult(){
-    questionElement.innerHTML="Exam Finished!";
-    answersElement.innerHTML="";
-    nextBtn.style.display="none";
-
-    const result = document.createElement("div");
-    result.classList.add("result");
-    result.innerHTML="Sənin balın: "+score+" / "+questions.length;
-    answersElement.appendChild(result);
 }
 
-loadQuestion();
+qarishdir(questions);
+
+function sualiGoster(){
+
+    cavabYeri.innerHTML = "";
+
+    let sual = questions[sualIndex];
+
+    sualYeri.innerText = (sualIndex + 1) + ". " + sual.question;
+
+    let variantlar = [sual.correct, ...sual.wrong];
+    qarishdir(variantlar);
+
+    variantlar.forEach(function(secim){
+
+        let btn = document.createElement("button");
+        btn.innerText = secim;
+
+        btn.onclick = function(){
+
+            if(secim === sual.correct){
+                duzCavab++;
+                btn.style.backgroundColor = "green";
+            }else{
+                sehvCavab++;
+                btn.style.backgroundColor = "red";
+            }
+
+            Array.from(cavabYeri.children).forEach(function(d){
+                d.disabled = true;
+            });
+
+            setTimeout(function(){
+                sualIndex++;
+
+                if(sualIndex < questions.length){
+                    sualiGoster();
+                }else{
+                    neticeniGoster();
+                }
+
+            }, 1000);
+        };
+
+        cavabYeri.appendChild(btn);
+    });
+}
+
+function neticeniGoster(){
+
+    sualYeri.innerText = "İmtahan bitdi!";
+    cavabYeri.innerHTML = "";
+
+    let netice = document.createElement("div");
+
+    netice.innerHTML = `
+        <h3>Ümumi sual sayı: ${questions.length}</h3>
+        <h3>Düzgün cavab: ${duzCavab}</h3>
+        <h3>Səhv cavab: ${sehvCavab}</h3>
+        <p>4 səhv bir düzü aparır (nolsun bura DİM deyil Kamran müəllim belə istəyir).</p>
+    `;
+
+    cavabYeri.appendChild(netice);
+}
+
+sualiGoster();
 
 </script>
 
